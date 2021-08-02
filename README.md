@@ -1,2 +1,0 @@
-# ArabicaAPI
-only application
