@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Arabica.Controllers
+namespace ArabicaAPI.Controllers
 {
     public class DefaultController : Controller
     {
