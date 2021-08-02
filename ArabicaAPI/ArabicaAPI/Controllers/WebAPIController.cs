@@ -313,8 +313,7 @@ namespace ArabicaAPI.Controllers
                     {
                         model.Status = "0";
                         model.Message = ds.Tables[0].Rows[0]["Remark"].ToString();
-                        model.FirstName = ds.Tables[0].Rows[0]["FK_MemId"].ToString();
-
+                        model.FirstName = ds.Tables[0].Rows[0]["FirstName"].ToString();
                         model.DisplayName = ds.Tables[0].Rows[0]["DisPlayName"].ToString();
                         model.Fk_memId = ds.Tables[0].Rows[0]["Fk_memId"].ToString();
                         model.Fk_UserTypeId = ds.Tables[0].Rows[0]["Fk_UserTypeId"].ToString();
@@ -349,10 +348,18 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = obj.CheckValidateParent();
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
-                    model.Status = "0";
-                    model.Message = "Valid";
-                    model.FK_MemId = ds.Tables[0].Rows[0]["FK_MemId"].ToString();
-                    model.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
+                    {
+                        model.Status = "1";
+                        model.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                    else
+                    {
+                        model.Status = "0";
+                        model.Message = "Valid";
+                        model.FK_MemId = ds.Tables[0].Rows[0]["FK_MemId"].ToString();
+                        model.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
+                    }
                 }
                 else
                 {
@@ -369,7 +376,7 @@ namespace ArabicaAPI.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage SignUpp(SignUpModel obj)
+        public HttpResponseMessage SignUp(SignUpModel obj)
         {
             SignUpResponse model = new SignUpResponse();
             try
@@ -378,7 +385,7 @@ namespace ArabicaAPI.Controllers
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     model.Status = "0";
-                    model.Message = "Valid";
+                    model.Message = "Registered Successfully";
                     model.MemId = ds.Tables[0].Rows[0]["MemId"].ToString();
                     model.MSG = ds.Tables[0].Rows[0]["MSG"].ToString();
                     model.LoginID = ds.Tables[0].Rows[0]["LoginID"].ToString();
@@ -392,7 +399,7 @@ namespace ArabicaAPI.Controllers
                 else
                 {
                     model.Status = "1";
-                    model.Message = "Invalid";
+                    model.Message = "Error occured";
                 }
             }
             catch (Exception ex)
@@ -473,6 +480,121 @@ namespace ArabicaAPI.Controllers
                 {
                     model.Status = "1";
                     model.Message = "Invalid";
+                }
+            }
+            catch (Exception ex)
+            {
+                model.Status = "1";
+                model.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
+        [HttpPost]
+        public HttpResponseMessage GetProductForReInvestment(Package model)
+        {
+            PackageList obj1 = new PackageList();
+            List<PackageResponse> lst = new List<PackageResponse>();
+            try
+            {
+                DataSet ds = model.GetProductDetailForReTopUp();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    obj1.Status = "0";
+                    obj1.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        PackageResponse obj = new PackageResponse();
+                        obj.ProductId = r["pk_productid"].ToString();
+                        obj.ProductPrice = r["ProductPrice"].ToString();
+                        obj.ProductName = r["ProductName"].ToString();
+                        lst.Add(obj);
+                    }
+                    obj1.lstPackage = lst;
+                }
+                else
+                {
+                    obj1.Status = "1";
+                    obj1.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj1.Status = "1";
+                obj1.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj1);
+        }
+        [HttpPost]
+        public HttpResponseMessage GetMemberDetail(LoginModel model)
+        {
+            MemberDetail obj = new MemberDetail();
+            try
+            {
+                DataSet ds = model.GetMemberDetailForReInvestMent();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    obj.Status = "0";
+                    obj.Message = "Record Found";
+                    obj.TemPermanent = ds.Tables[0].Rows[0]["TemPermanent"].ToString();
+                    obj.JoiningDate = ds.Tables[0].Rows[0]["JoiningDate"].ToString();
+                    obj.LoginId = ds.Tables[0].Rows[0]["LoginId"].ToString();
+                    obj.MemId = ds.Tables[0].Rows[0]["MemId"].ToString();
+                    obj.Password = ds.Tables[0].Rows[0]["Password"].ToString();
+                    obj.SponsorLoginId = ds.Tables[0].Rows[0]["SponsorLoginId"].ToString();
+                    obj.MemberName = ds.Tables[0].Rows[0]["MemberName"].ToString();
+                    obj.FatherName = ds.Tables[0].Rows[0]["FathersName"].ToString();
+                    obj.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
+                    obj.Address1 = ds.Tables[0].Rows[0]["Address1"].ToString();
+                    obj.City = ds.Tables[0].Rows[0]["City"].ToString();
+                    obj.StateName = ds.Tables[0].Rows[0]["StateName"].ToString();
+                    obj.Mobile1 = ds.Tables[0].Rows[0]["Mobile1"].ToString();
+                    obj.Phone1 = ds.Tables[0].Rows[0]["Phone1"].ToString();
+                    obj.PanNo = ds.Tables[0].Rows[0]["PanNo"].ToString();
+                    obj.Fk_ProductId = ds.Tables[0].Rows[0]["FK_ProductId"].ToString();
+                    obj.ProductAmount = ds.Tables[0].Rows[0]["ProductAmount"].ToString();
+                    obj.PaymentId = ds.Tables[0].Rows[0]["PaymentId"].ToString();
+                }
+                else
+                {
+                    obj.Status = "1";
+                    obj.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj.Status = "1";
+                obj.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj);
+        }
+        public HttpResponseMessage ReInvestment(TopUpRequest obj)
+        {
+            TopUpResponse model = new TopUpResponse();
+            try
+            {
+                DataSet ds = obj.ReTopUp();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        model.Status = "0";
+                        model.Message = "Re Top-Up successfully";
+                        model.Result = ds.Tables[0].Rows[0]["Result"].ToString();
+                        model.LoginId = ds.Tables[0].Rows[0]["LoginId"].ToString();
+                        model.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
+                        model.PDetails = ds.Tables[0].Rows[0]["PDetails"].ToString();
+                        model.Mobile1 = ds.Tables[0].Rows[0]["Mobile1"].ToString();
+                    }
+                    else
+                    {
+                        model.Status = "1";
+                        model.Message = "Error occurred";
+                    }
+                }
+                else
+                {
+                    model.Status = "1";
+                    model.Message = "No Record Found";
                 }
             }
             catch (Exception ex)

@@ -28,6 +28,12 @@ namespace ArabicaAPI.Models
             DataSet ds = DBHelper.ExecuteQuery("GetMemberNameForMobile", para);
             return ds;
         }
+        public DataSet GetMemberDetailForReInvestMent()
+        {
+            SqlParameter[] para = { new SqlParameter("@LoginId", LoginId) };
+            DataSet ds = DBHelper.ExecuteQuery("SelectMemberDetailsForMobile", para);
+            return ds;
+        }
     }
     public class LoginResponse
     {
@@ -98,10 +104,17 @@ namespace ArabicaAPI.Models
     public class Package
     {
         public string PackageId { get; set; }
+        public int Amount { get; set; }
         public DataSet GetPackage()
         {
             SqlParameter[] para = { new SqlParameter("@PackageId", PackageId), };
             DataSet ds = DBHelper.ExecuteQuery("ProductDetailTopForMobile", para);
+            return ds;
+        }
+        public DataSet GetProductDetailForReTopUp()
+        {
+            SqlParameter[] para = { new SqlParameter("@Amount", Amount), };
+            DataSet ds = DBHelper.ExecuteQuery("ProductDetailReTopUpForMobile", para);
             return ds;
         }
     }
@@ -148,6 +161,15 @@ namespace ArabicaAPI.Models
             new SqlParameter("@CreatedBy", CreatedBy),
             };
             DataSet ds = DBHelper.ExecuteQuery("UpgradeIdbyWalletAmountForMobile", para);
+            return ds;
+        }
+        public DataSet ReTopUp()
+        {
+            SqlParameter[] para = { new SqlParameter("@FK_MemId", PK_UserId),
+            new SqlParameter("@ProductId", ProductId),
+            new SqlParameter("@CreatedBy", CreatedBy),
+            };
+            DataSet ds = DBHelper.ExecuteQuery("UpgradeIdbyWalletAmountReTopUpForMobile", para);
             return ds;
         }
     }
@@ -375,6 +397,29 @@ namespace ArabicaAPI.Models
         public string IncomeType { get; set; }
         public string BusinessAmount { get; set; }
         public string CommissionPercentage { get; set; }
-
+    }
+    public class MemberDetail
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public string TemPermanent { get; set; }
+        public string JoiningDate { get; set; }
+        public string LoginId { get; set; }
+        public string MemId { get; set; }
+        public string Password { get; set; }
+        public string SponsorLoginId { get; set; }
+        public string MemberName { get; set; }
+        public string FatherName { get; set; }
+        public string DisplayName { get; set; }
+        public string Address1 { get; set; }
+        public string City { get; set; }
+        public string StateName { get; set; }
+        public string Mobile1 { get; set; }
+        public string Phone1 { get; set; }
+        public string PanCard { get; set; }
+        public string PanNo { get; set; }
+        public string Fk_ProductId { get; set; }
+        public string ProductAmount { get; set; }
+        public string PaymentId { get; set; }
     }
 }
