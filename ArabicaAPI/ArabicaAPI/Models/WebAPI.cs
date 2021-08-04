@@ -118,6 +118,7 @@ namespace ArabicaAPI.Models
             return ds;
         }
     }
+
     public class PackageList
     {
         public string Status { get; set; }
@@ -130,6 +131,7 @@ namespace ArabicaAPI.Models
         public string ProductPrice { get; set; }
         public string ProductId { get; set; }
     }
+
     public class ProductRequest
     {
         public string LoginId { get; set; }
@@ -363,7 +365,7 @@ namespace ArabicaAPI.Models
         public string Amount { get; set; }
         public string IncomeType { get; set; }
         public string BusinessAmount { get; set; }
-        public string CommissionPercentage { get; set; }       
+        public string CommissionPercentage { get; set; }
     }
     public class LoanIncomeModel
     {
@@ -422,4 +424,112 @@ namespace ArabicaAPI.Models
         public string ProductAmount { get; set; }
         public string PaymentId { get; set; }
     }
+    public class ReferalTransactions
+    {
+        public string fk_memid { get; set; }       
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public DataSet GetReferalTransactions()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@FK_MemId",fk_memid),
+                 new SqlParameter("@FromDate",FromDate),
+                  new SqlParameter("@ToDate",ToDate)
+            };
+            DataSet ds = DBHelper.ExecuteQuery("GetRwalletDetailsForMobile",para);
+            return ds;
+        }
+    }
+    public class ReferalTransactionsList
+    {
+        public string Status { get; set;}
+        public string Message { get; set; }
+        public List<ReferalTransactionsResponse> lstReferalTransactions { get; set; }
+    }
+    public class ReferalTransactionsResponse
+    {
+        public string id { get; set;}
+        public string fk_memid { get; set; }
+        public string Status { get; set; }
+        public string TransDate { get; set; }
+        public string Narration { get; set; }
+        public string DrAmount { get; set; }
+        public string CrAmount { get; set; }
+        public string Balance { get; set; }
+    }
+    public class BTranzactionDetails
+    {
+        public string fk_memid { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public DataSet GetBTranzactionDetails()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@FK_MemId",fk_memid),
+                 new SqlParameter("@FromDate",FromDate),
+                  new SqlParameter("@ToDate",ToDate)
+            };
+            DataSet ds = DBHelper.ExecuteQuery("GetBwalletDetailsForMobile", para);
+            return ds;
+        }
+    }
+    public class BTranzactionDetailsList
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<BTranzactionDetailsResponse> lstBTranzactionDetails { get; set; }
+    }
+    public class BTranzactionDetailsResponse
+    {
+        public string id { get; set; }
+        public string fk_memid { get; set; }
+        public string Status { get; set; }
+        public string TransDate { get; set; }
+        public string Narration { get; set; }
+        public string DrAmount { get; set; }
+        public string CrAmount { get; set; }
+        public string Balance { get; set; }
+    }
+     public class DTranzactionDetails
+    {
+        public string fk_memid { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public DataSet GetDTranzactionDetails()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@FK_MemId",fk_memid),
+                 new SqlParameter("@FromDate",FromDate),
+                  new SqlParameter("@ToDate",ToDate)
+            };
+            DataSet ds = DBHelper.ExecuteQuery("GetDwalletDetailsForMobile", para);
+            return ds;
+        }
+    }
+    public class DTranzactionDetailsList
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<DTranzactionDetailsResponse> lstDTranzactionDetails { get; set; }
+    }
+    public class DTranzactionDetailsResponse
+    {
+        public string id { get; set; }
+        public string fk_memid { get; set; }
+        public string Status { get; set; }
+        public string TransDate { get; set; }
+        public string Narration { get; set; }
+        public string DrAmount { get; set; }
+        public string CrAmount { get; set; }
+        public string Balance { get; set; }
+    }
+
+
+
+
+
+
 }
