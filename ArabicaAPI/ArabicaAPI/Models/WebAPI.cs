@@ -363,7 +363,7 @@ namespace ArabicaAPI.Models
         public string Amount { get; set; }
         public string IncomeType { get; set; }
         public string BusinessAmount { get; set; }
-        public string CommissionPercentage { get; set; }       
+        public string CommissionPercentage { get; set; }
     }
     public class LoanIncomeModel
     {
@@ -422,4 +422,120 @@ namespace ArabicaAPI.Models
         public string ProductAmount { get; set; }
         public string PaymentId { get; set; }
     }
+    public class TeamRequest
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string LoginId { get; set; }
+        public string Leg { get; set; }
+        public string Down { get; set; }
+        public string Status { get; set; }
+        public DataSet GetMemberDownline()
+        {
+            SqlParameter[] para = {
+                new SqlParameter("@FromDate",FromDate),
+                new SqlParameter("@ToDate",ToDate),
+                  new SqlParameter("@LoginId",LoginId),
+                  new SqlParameter("@Leg",Leg),
+                  new SqlParameter("@Down",Down),
+                  new SqlParameter("@Status",Status),
+            };
+            DataSet ds = DBHelper.ExecuteQuery("MemberDownLineForMobile", para);
+            return ds;
+        }
+    }
+    public class TeamReponse
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<Team> lst { get; set; }
+    }
+    public class Team
+    {
+        public string FK_MemId { get; set; }
+        public string DisplayName { get; set; }
+        public string LoginId { get; set; }
+        public string JoiningDate { get; set; }
+        public string Status { get; set; }
+        public string Package { get; set; }
+    }
+    public class EWalletRequest
+    {
+        public int FormFK_Memid { get; set; }
+        public int ToFK_Memid { get; set; }
+        public float TransferredAmount { get; set; }
+        public char TransferType { get; set; }
+        public string Remark { get; set; }
+        public string FormName { get; set; }
+        public DataSet TransferFund()
+        {
+            SqlParameter[] para = {
+                new SqlParameter("@FormFK_Memid",FormFK_Memid),
+                new SqlParameter("@ToFK_Memid",ToFK_Memid),
+                  new SqlParameter("@TransferredAmount",TransferredAmount),
+                  new SqlParameter("@TransferType",TransferType),
+                  new SqlParameter("@Remark",Remark),
+                  new SqlParameter("@FormName",FormName),
+            };
+            DataSet ds = DBHelper.ExecuteQuery("TransFerFundUserPinWalletMobile", para);
+            return ds;
+        }
+    }
+    public class EWalletResponse
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+    }
+    public class WalletRequest
+    {
+        public string FK_MemId { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public DataSet GetEWalletReport()
+        {
+            SqlParameter[] para = {
+                new SqlParameter("@FK_MemId",FK_MemId),
+                new SqlParameter("@FromDate",FromDate),
+                  new SqlParameter("@ToDate",ToDate),
+            };
+            DataSet ds = DBHelper.ExecuteQuery("GetDrCrDetailsEwalletMobile", para);
+            return ds;
+        }
+    }
+    public class WalletResponse
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<Wallet> lst { get; set; }
+        public decimal TCrAmount { get; set; }
+        public decimal TDrAmount { get; set; }
+        public decimal Balance { get; set; }
+    }
+    public class Wallet
+    {
+        public string Id { get; set; }
+        public string FK_MemId { get; set; }
+        public string Status { get; set; }
+        public string TransDate { get; set; }
+        public string Narration { get; set; }
+        public decimal DrAmount { get; set; }
+        public decimal CrAmount { get; set; }
+        public decimal Balance { get; set; }
+    } 
+    //public class TreeRequest
+    //{
+    //    public string LoginId { get; set; }
+    //    public string LoginIdParent { get; set; }
+    //}
+    //public class TreeReponse
+    //{
+    //    public string Status { get; set; }
+    //    public string Message { get; set; }
+    //    public List<Tree> lst { get; set; }
+    //    public List<TreeDetails> lstdetails
+    //}
+    //public class Tree
+    //{
+    //    public string 
+    //}
 }

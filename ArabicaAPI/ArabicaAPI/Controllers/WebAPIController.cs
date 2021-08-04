@@ -604,5 +604,127 @@ namespace ArabicaAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, model);
         }
+        [HttpPost]
+        public HttpResponseMessage MyTeam(TeamRequest obj)
+        {
+            TeamReponse model = new TeamReponse();
+            try
+            {
+                List<Team> lst = new List<Team>();
+                DataSet ds = obj.GetMemberDownline();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    model.Status = "0";
+                    model.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        Team obj1 = new Team();
+                        obj1.FK_MemId = r["FK_MemId"].ToString();
+                        obj1.DisplayName = r["DisplayName"].ToString();
+                        obj1.LoginId = r["LoginId"].ToString();
+                        obj1.JoiningDate = r["JoiningDate"].ToString();
+                        obj1.Package = r["CalculationAmt"].ToString();
+                        lst.Add(obj1);
+                    }
+                    model.lst = lst;
+                }
+                else
+                {
+                    model.Status = "1";
+                    model.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                model.Status = "1";
+                model.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
+        [HttpPost]
+        public HttpResponseMessage EWalletTransfer(EWalletRequest obj)
+        {
+            EWalletResponse model = new EWalletResponse();
+            try
+            {
+                DataSet ds = obj.TransferFund();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        model.Status = "0";
+                        model.Message = "Fund Transferred successfully";
+                    }
+                    else
+                    {
+                        model.Status = "1";
+                        model.Message = "Error occurred";
+                    }
+                }
+                else
+                {
+                    model.Status = "1";
+                    model.Message = "Error Occurred";
+                }
+            }
+            catch (Exception ex)
+            {
+                model.Status = "1";
+                model.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
+        public HttpResponseMessage EWalletReport(WalletRequest obj)
+        {
+            WalletResponse model = new WalletResponse();
+            List<Wallet> lst = new List<Wallet>();
+            try
+            {
+                DataSet ds = obj.GetEWalletReport();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    model.Status = "0";
+                    model.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        Wallet obj1 = new Wallet();
+                        obj1.Id = r["id"].ToString();
+                        obj1.FK_MemId = r["fk_memid"].ToString();
+                        obj1.Status = r["Status"].ToString();
+                        obj1.TransDate = r["TransDate"].ToString();
+                        obj1.Narration = r["Narration"].ToString();
+                        obj1.DrAmount = Convert.ToDecimal(r["DrAmount"]);
+                        obj1.CrAmount = Convert.ToDecimal(r["CrAmount"]);
+                        obj1.Balance = Convert.ToDecimal(r["Balance"]);
+                        lst.Add(obj1);
+                    }
+                    model.lst = lst;
+                    if (ds.Tables[1].Rows.Count > 0)
+                    {
+                        model.TCrAmount = Convert.ToDecimal(ds.Tables[1].Rows[0]["TCrAmount"]);
+                        model.TDrAmount = Convert.ToDecimal(ds.Tables[1].Rows[0]["TDrAmount"]);
+                        model.Balance = Convert.ToDecimal(ds.Tables[1].Rows[0]["Balance"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                model.Status = "1";
+                model.Message = "No Record Found";
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
+        //public HttpResponseMessage MyTree(TreeRequest obj)
+        //{
+        //    TreeResponse model = new TreeResponse();
+        //    try
+        //    {
+
+        //    }
+        //    catch(Exception ex)
+        //    {
+
+        //    }
+        //}
     }
 }
