@@ -187,6 +187,7 @@ namespace ArabicaAPI.Models
     }
     public class Profile
     {
+
         public string LoginId { get; set; }
         public DataSet GetProfile()
         {
@@ -592,7 +593,8 @@ namespace ArabicaAPI.Models
         public string CrAmount { get; set; }
         public string Balance { get; set; }
     }
-    public class DTranzactionDetails
+
+     public class DTranzactionDetails
     {
         public string fk_memid { get; set; }
         public string FromDate { get; set; }
@@ -626,20 +628,54 @@ namespace ArabicaAPI.Models
         public string CrAmount { get; set; }
         public string Balance { get; set; }
     }
-    //public class TreeRequest
-    //{
-    //    public string LoginId { get; set; }
-    //    public string LoginIdParent { get; set; }
-    //}
-    //public class TreeReponse
-    //{
-    //    public string Status { get; set; }
-    //    public string Message { get; set; }
-    //    public List<Tree> lst { get; set; }
-    //    public List<TreeDetails> lstdetails
-    //}
-    //public class Tree
-    //{
-    //    public string 
-    //}
+
+
+
+
+    public class DirectIncome
+
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string LoginId { get; set; }
+        public string Leg { get; set; }
+        public string Down { get; set; }
+        public string Status { get; set; }
+        public DataSet GetDirectIncome()
+        {
+            SqlParameter[] para =
+            { 
+                 new SqlParameter("@FromDate",FromDate),
+                  new SqlParameter("@ToDate",ToDate),
+                  new SqlParameter("@LoginId",LoginId),
+                  new SqlParameter("@Leg",Leg),
+                  new SqlParameter("@Down",Down),
+                  new SqlParameter("@Status",Status)
+            };
+            DataSet ds = DBHelper.ExecuteQuery("webMemberDownLineForMobile", para);
+            return ds;
+        }
+    }
+    public class DirectIncomeList
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<DirectIncomeResponse> lstDirectIncome { get; set; }
+    }
+    public class DirectIncomeResponse
+    {
+        public string fk_memid { get; set; }
+        public string Status { get; set; }
+        public string CalculationAmt { get; set; }
+        public string Leg { get; set; }
+        public string CreatedDate { get; set; }
+        public string JoiningDate { get; set; }
+        public string DisplayName { get; set; }
+    }
+
+
+
+
+
+
 }
