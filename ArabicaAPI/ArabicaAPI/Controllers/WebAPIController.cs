@@ -167,6 +167,7 @@ namespace ArabicaAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, model);
         }
+
         [HttpPost]
         public HttpResponseMessage GetProduct(Package model)
         {
@@ -726,5 +727,125 @@ namespace ArabicaAPI.Controllers
 
         //    }
         //}
+        [HttpPost]
+        public HttpResponseMessage GetReferalWallet(ReferalTransactions model)
+        {
+            ReferalTransactionsList obj1 = new ReferalTransactionsList();
+            List<ReferalTransactionsResponse> lst = new List<ReferalTransactionsResponse>();
+            try
+            {
+                DataSet ds = model.GetReferalTransactions();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    obj1.Status = "0";
+                    obj1.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        ReferalTransactionsResponse obj = new ReferalTransactionsResponse();
+                        obj.id = r["id"].ToString();
+                        obj.fk_memid = r["fk_memid"].ToString();
+                        obj.Status = r["Status"].ToString();
+                        obj.TransDate = r["TransDate"].ToString();
+                        obj.Narration = r["Narration"].ToString();
+                        obj.DrAmount = r["DrAmount"].ToString();
+                        obj.CrAmount = r["CrAmount"].ToString();
+                        obj.Balance = r["Balance"].ToString();
+                        lst.Add(obj);
+                    }
+                    obj1.lstReferalTransactions = lst;
+                }
+                else
+                {
+                    obj1.Status = "1";
+                    obj1.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj1.Status = "1";
+                obj1.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj1);
+        }
+        [HttpPost]
+        public HttpResponseMessage GetBinaryWallet(BTranzactionDetails model)
+        {
+            BTranzactionDetailsList obj1 = new BTranzactionDetailsList();
+            List<BTranzactionDetailsResponse> lst = new List<BTranzactionDetailsResponse>();
+            try
+            {
+                DataSet ds = model.GetBTranzactionDetails();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    obj1.Status = "0";
+                    obj1.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        BTranzactionDetailsResponse obj = new BTranzactionDetailsResponse();
+                        obj.id = r["id"].ToString();
+                        obj.fk_memid = r["fk_memid"].ToString();
+                        obj.Status = r["Status"].ToString();
+                        obj.TransDate = r["TransDate"].ToString();
+                        obj.Narration = r["Narration"].ToString();
+                        obj.DrAmount = r["DrAmount"].ToString();
+                        obj.CrAmount = r["CrAmount"].ToString();
+                        obj.Balance = r["Balance"].ToString();
+                        lst.Add(obj);
+                    }
+                    obj1.lstBTranzactionDetails = lst;
+                }
+                else
+                {
+                    obj1.Status = "1";
+                    obj1.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj1.Status = "1";
+                obj1.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj1);
+        }
+        [HttpPost]
+        public HttpResponseMessage RoiWallet(DTranzactionDetails model)
+        {
+            DTranzactionDetailsList obj1 = new DTranzactionDetailsList();
+            List<DTranzactionDetailsResponse> lst = new List<DTranzactionDetailsResponse>();
+            try
+            {
+                DataSet ds = model.GetDTranzactionDetails();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    obj1.Status = "0";
+                    obj1.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        DTranzactionDetailsResponse obj = new DTranzactionDetailsResponse();
+                        obj.id = r["id"].ToString();
+                        obj.fk_memid = r["fk_memid"].ToString();
+                        obj.Status = r["Status"].ToString();
+                        obj.TransDate = r["TransDate"].ToString();
+                        obj.Narration = r["Narration"].ToString();
+                        obj.DrAmount = r["DrAmount"].ToString();
+                        obj.CrAmount = r["CrAmount"].ToString();
+                        obj.Balance = r["Balance"].ToString();
+                        lst.Add(obj);
+                    }
+                    obj1.lstDTranzactionDetails = lst;
+                }
+                else
+                {
+                    obj1.Status = "1";
+                    obj1.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj1.Status = "1";
+                obj1.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj1);
+        }
     }
 }
