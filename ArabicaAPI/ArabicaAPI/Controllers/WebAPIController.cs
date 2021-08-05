@@ -768,5 +768,50 @@ namespace ArabicaAPI.Controllers
         }
 
 
+        [HttpPost]
+        public HttpResponseMessage ForgetPassword(ForgetPassword model)
+        {
+            ForgetPasswordList obj1 = new ForgetPasswordList();
+            List<ForgetPasswordResponse> lst = new List<ForgetPasswordResponse>();
+            try
+            {
+                DataSet ds = model.GetForgetPassword();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    obj1.Status = "0";
+                    obj1.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        ForgetPasswordResponse obj = new ForgetPasswordResponse();
+                        obj.LoginId = r["LoginId"].ToString();
+                        obj.Mobile1 = r["Mobile1"].ToString();
+                        obj.DisplayName = r["DisplayName"].ToString();
+                        obj.Password = r["Password"].ToString();
+                        lst.Add(obj);
+                    }
+                    obj1.lsForgetPassword = lst;
+                }
+                else
+                {
+                    obj1.Status = "1";
+                    obj1.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj1.Status = "1";
+                obj1.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj1);
+        }
+
+
+
+
+
+
+
+
+
     }
 }

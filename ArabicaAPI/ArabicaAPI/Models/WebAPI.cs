@@ -576,6 +576,41 @@ namespace ArabicaAPI.Models
 
 
 
+    public class ForgetPassword
+    {
+        public string LoginId { get; set; }
+        public string Mobile1 { get; set; }
+        public DataSet GetForgetPassword()
+        {
+            SqlParameter[] para =
+            {
+                  new SqlParameter("@LoginID",LoginId),
+                  new SqlParameter("@Mobile",Mobile1)
+                
+            };
+            DataSet ds = DBHelper.ExecuteQuery("WebResetPasswordForMobile", para);
+            return ds;
+        }
+    }
+    public class ForgetPasswordList
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<ForgetPasswordResponse> lsForgetPassword { get; set; }
+    }
+    public class ForgetPasswordResponse
+    {
+        public string LoginId { get; set; }
+        public string DisplayName { get; set; }
+        public string Password { get; set; }
+        public string Mobile1 { get; set; }
+        
+       
+    }
+
+
+
+
 
 
 }
