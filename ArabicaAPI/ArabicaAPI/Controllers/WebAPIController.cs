@@ -804,14 +804,5 @@ namespace ArabicaAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, obj1);
         }
-
-
-
-
-
-
-
-
-
     }
 }
