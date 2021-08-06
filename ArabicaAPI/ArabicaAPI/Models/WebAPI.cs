@@ -717,7 +717,7 @@ namespace ArabicaAPI.Models
     }
     public class Tree
     {
-        public string MemId { get; set; }
+        public string FK_MemId { get; set; }
         public string ParentId { get; set; }
         public string SponsorId { get; set; }
         public string LoginId { get; set; }
@@ -728,7 +728,7 @@ namespace ArabicaAPI.Models
         public string PackageName { get; set; }
         public decimal Amount { get; set; }
         public string SpillById { get; set; }
-        public string IDStatus { get; set; }
+        public string ImageUrl { get; set; }
         public string PBV { get;  set; }
     }
     public class TreeDetails
