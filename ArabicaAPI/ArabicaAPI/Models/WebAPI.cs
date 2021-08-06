@@ -628,31 +628,21 @@ namespace ArabicaAPI.Models
         public string CrAmount { get; set; }
         public string Balance { get; set; }
     }
-
-
-
-
     public class DirectIncome
-
     {
+        public string Fk_MemId { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
-        public string LoginId { get; set; }
-        public string Leg { get; set; }
-        public string Down { get; set; }
-        public string Status { get; set; }
         public DataSet GetDirectIncome()
         {
             SqlParameter[] para =
             {
+                new SqlParameter("@Fk_MemId",Fk_MemId),
                  new SqlParameter("@FromDate",FromDate),
                   new SqlParameter("@ToDate",ToDate),
-                  new SqlParameter("@LoginId",LoginId),
-                  new SqlParameter("@Leg",Leg),
-                  new SqlParameter("@Down",Down),
-                  new SqlParameter("@Status",Status)
+                 
             };
-            DataSet ds = DBHelper.ExecuteQuery("webMemberDownLineForMobile", para);
+            DataSet ds = DBHelper.ExecuteQuery("DirectIncomeForMobile", para);
             return ds;
         }
     }
@@ -664,13 +654,44 @@ namespace ArabicaAPI.Models
     }
     public class DirectIncomeResponse
     {
-        public string fk_memid { get; set; }
-        public string Status { get; set; }
-        public string CalculationAmt { get; set; }
-        public string Leg { get; set; }
-        public string CreatedDate { get; set; }
-        public string JoiningDate { get; set; }
+        public string LoginId { get; set; }
         public string DisplayName { get; set; }
+        public string CurrentDate { get; set; }
+        public string Amount { get; set; }
+        public string IncomeType { get; set; }
+        public string BusinessAmount { get; set; }
+        public string CommissionPercentage { get; set; }
+    }
+    public class ForgetPassword
+    {
+        public string LoginId { get; set; }
+        public string Mobile1 { get; set; }
+        public DataSet GetForgetPassword()
+        {
+            SqlParameter[] para =
+            {
+                  new SqlParameter("@LoginID",LoginId),
+                  new SqlParameter("@Mobile",Mobile1)
+                
+            };
+            DataSet ds = DBHelper.ExecuteQuery("WebResetPasswordForMobile", para);
+            return ds;
+        }
+    }
+    public class ForgetPasswordList
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<ForgetPasswordResponse> lsForgetPassword { get; set; }
+    }
+    public class ForgetPasswordResponse
+    {
+        public string LoginId { get; set; }
+        public string DisplayName { get; set; }
+        public string Password { get; set; }
+        public string Mobile1 { get; set; }
+        
+       
     }
     public class TreeRequest
     {
