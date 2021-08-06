@@ -594,7 +594,7 @@ namespace ArabicaAPI.Models
         public string Balance { get; set; }
     }
 
-     public class DTranzactionDetails
+    public class DTranzactionDetails
     {
         public string fk_memid { get; set; }
         public string FromDate { get; set; }
@@ -644,7 +644,7 @@ namespace ArabicaAPI.Models
         public DataSet GetDirectIncome()
         {
             SqlParameter[] para =
-            { 
+            {
                  new SqlParameter("@FromDate",FromDate),
                   new SqlParameter("@ToDate",ToDate),
                   new SqlParameter("@LoginId",LoginId),
@@ -672,10 +672,93 @@ namespace ArabicaAPI.Models
         public string JoiningDate { get; set; }
         public string DisplayName { get; set; }
     }
-
-
-
-
-
-
+    public class TreeRequest
+    {
+        public string LoginId { get; set; }
+        public string LoginIdParent { get; set; }
+        public DataSet GetTreeData()
+        {
+            SqlParameter[] para =
+            {
+                 new SqlParameter("@LoginId",LoginId),
+                  new SqlParameter("@LoginIdParent",LoginIdParent),
+            };
+            DataSet ds = DBHelper.ExecuteQuery("ShowMemberTreeForMobile", para);
+            return ds;
+        }
+    }
+    public class TreeResponse
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<Tree> lst { get; set; }
+        public List<TreeDetails> lstDetails { get; set; }
+    }
+    public class Tree
+    {
+        public string MemId { get; set; }
+        public string ParentId { get; set; }
+        public string SponsorId { get; set; }
+        public string LoginId { get; set; }
+        public string MemberName { get; set; }
+        public string TemPermanent { get; set; }
+        public string Leg { get; set; }
+        public string MemberLevel { get; set; }
+        public string PackageName { get; set; }
+        public decimal Amount { get; set; }
+        public string SpillById { get; set; }
+        public string IDStatus { get; set; }
+        public string PBV { get;  set; }
+    }
+    public class TreeDetails
+    {
+        public string LoginId { get; set; }
+        public string FK_MemId { get; set; }
+        public string DisplayName { get; set; }
+        public string JoiningDate { get; set; }
+        public string PermanentDate { get; set; }
+        public string Status { get; set; }
+        public string SponsorId { get; set; }
+        public string SponsorName { get; set; }
+        public string ParentId { get; set; }
+        public string ParentName { get; set; }
+        public string ProductName { get; set; }
+        public string ReferralRegisteredLeft { get; set; }
+        public string ReferralRegisteredRight { get; set; }
+        public string ReferralConfirmedLeft { get; set; }
+        public string ReferralConfirmedRight { get; set; }
+        public string AssociatesRegisteredLeft { get; set; }
+        public string AssociatesRegisteredRight { get; set; }
+        public string AssociatesConfirmedLeft { get; set; }
+        public string AssociatesConfirmedRight { get; set; }
+        public string TotalLeft { get; set; }
+        public string TotalRight { get; set; }
+        public string TotalPair { get; set; }
+        public string AllLeft { get; set; }
+        public string AllRight { get; set; }
+        public string UsedLeft { get; set; }
+        public string UsedRight { get; set; }
+        public string UsedPair { get; set; }
+        public string CurrentLeft { get; set; }
+        public string CurrentRight { get; set; }
+        public string CurrentPair { get; set; }
+        public string PermanentLeft { get; set; }
+        public string PermanentRight { get; set; }
+        public string PinAmount { get; set; }
+        public string TopUpPinAmount { get; set; }
+        public string PendingPayment { get; set; }
+        public string PBV { get; set; }
+        public string TemPermanent { get; set; }
+        public string LeftBooking { get; set; }
+        public string RightBooking { get; set; }
+        public string TotalBooking { get; set; }
+        public string LeftAllotment { get; set; }
+        public string RightAllotment { get; set; }
+        public string TotalAllotment { get; set; }
+        public string SelfBooking { get; set; }
+        public string SelfAllotment { get; set; }
+        public string SelfBusiness { get; set; }
+        public string PlotNo { get; set; }
+        public string SiteName { get; set; }
+    }
 }
