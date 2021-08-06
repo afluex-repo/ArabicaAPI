@@ -941,7 +941,7 @@ namespace ArabicaAPI.Controllers
                     foreach (DataRow r in ds.Tables[0].Rows)
                     {
                         Tree obj1 = new Tree();
-                        obj1.MemId = r["MemId"].ToString();
+                        obj1.FK_MemId = r["MemId"].ToString();
                         obj1.ParentId = r["ParentId"].ToString();
                         obj1.SponsorId = r["SponsorId"].ToString();
                         obj1.LoginId = r["LoginId"].ToString();
@@ -953,7 +953,7 @@ namespace ArabicaAPI.Controllers
                         obj1.PackageName = r["PackageName"].ToString();
                         obj1.Amount = Convert.ToDecimal(r["Amount"]);
                         obj1.SpillById = r["SpillById"].ToString();
-                        obj1.IDStatus = r["IDStatus"].ToString();
+                        obj1.ImageUrl = r["IDStatus"].ToString();
                         lst.Add(obj1);
                     }
                     obj.lst = lst;
