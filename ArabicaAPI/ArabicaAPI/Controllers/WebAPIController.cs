@@ -594,12 +594,12 @@ namespace ArabicaAPI.Controllers
                         model.PDetails = ds.Tables[0].Rows[0]["PDetails"].ToString();
                         model.Mobile1 = ds.Tables[0].Rows[0]["Mobile1"].ToString();
                     }
-                    else if(ds.Tables[0].Rows[0][0].ToString() == "2")
+                    else if (ds.Tables[0].Rows[0][0].ToString() == "2")
                     {
                         model.Status = "1";
                         model.Message = "Not Sufficient Amount";
                     }
-                    else if(ds.Tables[0].Rows[0][0].ToString() == "101")
+                    else if (ds.Tables[0].Rows[0][0].ToString() == "101")
                     {
                         model.Status = "1";
                         model.Message = "Member is not Permanent";
@@ -755,22 +755,30 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = model.GetReferalTransactions();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    obj1.Status = "0";
-                    obj1.Message = "Record Found";
-                    foreach (DataRow r in ds.Tables[0].Rows)
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
                     {
-                        ReferalTransactionsResponse obj = new ReferalTransactionsResponse();
-                        obj.id = r["id"].ToString();
-                        obj.fk_memid = r["fk_memid"].ToString();
-                        obj.Status = r["Status"].ToString();
-                        obj.TransDate = r["TransDate"].ToString();
-                        obj.Narration = r["Narration"].ToString();
-                        obj.DrAmount = r["DrAmount"].ToString();
-                        obj.CrAmount = r["CrAmount"].ToString();
-                        obj.Balance = r["Balance"].ToString();
-                        lst.Add(obj);
+                        obj1.Status = "1";
+                        obj1.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
                     }
-                    obj1.lstReferalTransactions = lst;
+                    else
+                    {
+                        obj1.Status = "0";
+                        obj1.Message = "Record Found";
+                        foreach (DataRow r in ds.Tables[0].Rows)
+                        {
+                            ReferalTransactionsResponse obj = new ReferalTransactionsResponse();
+                            obj.id = r["id"].ToString();
+                            obj.fk_memid = r["fk_memid"].ToString();
+                            obj.Status = r["Status"].ToString();
+                            obj.TransDate = r["TransDate"].ToString();
+                            obj.Narration = r["Narration"].ToString();
+                            obj.DrAmount = r["DrAmount"].ToString();
+                            obj.CrAmount = r["CrAmount"].ToString();
+                            obj.Balance = r["Balance"].ToString();
+                            lst.Add(obj);
+                        }
+                        obj1.lstReferalTransactions = lst;
+                    }
                 }
                 else
                 {
@@ -795,22 +803,30 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = model.GetBTranzactionDetails();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    obj1.Status = "0";
-                    obj1.Message = "Record Found";
-                    foreach (DataRow r in ds.Tables[0].Rows)
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
                     {
-                        BTranzactionDetailsResponse obj = new BTranzactionDetailsResponse();
-                        obj.id = r["id"].ToString();
-                        obj.fk_memid = r["fk_memid"].ToString();
-                        obj.Status = r["Status"].ToString();
-                        obj.TransDate = r["TransDate"].ToString();
-                        obj.Narration = r["Narration"].ToString();
-                        obj.DrAmount = r["DrAmount"].ToString();
-                        obj.CrAmount = r["CrAmount"].ToString();
-                        obj.Balance = r["Balance"].ToString();
-                        lst.Add(obj);
+                        obj1.Status = "1";
+                        obj1.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
                     }
-                    obj1.lstBTranzactionDetails = lst;
+                    else
+                    {
+                        obj1.Status = "0";
+                        obj1.Message = "Record Found";
+                        foreach (DataRow r in ds.Tables[0].Rows)
+                        {
+                            BTranzactionDetailsResponse obj = new BTranzactionDetailsResponse();
+                            obj.id = r["id"].ToString();
+                            obj.fk_memid = r["fk_memid"].ToString();
+                            obj.Status = r["Status"].ToString();
+                            obj.TransDate = r["TransDate"].ToString();
+                            obj.Narration = r["Narration"].ToString();
+                            obj.DrAmount = r["DrAmount"].ToString();
+                            obj.CrAmount = r["CrAmount"].ToString();
+                            obj.Balance = r["Balance"].ToString();
+                            lst.Add(obj);
+                        }
+                        obj1.lstBTranzactionDetails = lst;
+                    }
                 }
                 else
                 {
@@ -835,22 +851,30 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = model.GetDTranzactionDetails();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    obj1.Status = "0";
-                    obj1.Message = "Record Found";
-                    foreach (DataRow r in ds.Tables[0].Rows)
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
                     {
-                        DTranzactionDetailsResponse obj = new DTranzactionDetailsResponse();
-                        obj.id = r["id"].ToString();
-                        obj.fk_memid = r["fk_memid"].ToString();
-                        obj.Status = r["Status"].ToString();
-                        obj.TransDate = r["TransDate"].ToString();
-                        obj.Narration = r["Narration"].ToString();
-                        obj.DrAmount = r["DrAmount"].ToString();
-                        obj.CrAmount = r["CrAmount"].ToString();
-                        obj.Balance = r["Balance"].ToString();
-                        lst.Add(obj);
+                        obj1.Status = "1";
+                        obj1.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
                     }
-                    obj1.lstDTranzactionDetails = lst;
+                    else
+                    {
+                        obj1.Status = "0";
+                        obj1.Message = "Record Found";
+                        foreach (DataRow r in ds.Tables[0].Rows)
+                        {
+                            DTranzactionDetailsResponse obj = new DTranzactionDetailsResponse();
+                            obj.id = r["id"].ToString();
+                            obj.fk_memid = r["fk_memid"].ToString();
+                            obj.Status = r["Status"].ToString();
+                            obj.TransDate = r["TransDate"].ToString();
+                            obj.Narration = r["Narration"].ToString();
+                            obj.DrAmount = r["DrAmount"].ToString();
+                            obj.CrAmount = r["CrAmount"].ToString();
+                            obj.Balance = r["Balance"].ToString();
+                            lst.Add(obj);
+                        }
+                        obj1.lstDTranzactionDetails = lst;
+                    }
                 }
                 else
                 {
