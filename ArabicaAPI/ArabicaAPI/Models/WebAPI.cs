@@ -640,7 +640,7 @@ namespace ArabicaAPI.Models
                 new SqlParameter("@Fk_MemId",Fk_MemId),
                  new SqlParameter("@FromDate",FromDate),
                   new SqlParameter("@ToDate",ToDate),
-                 
+
             };
             DataSet ds = DBHelper.ExecuteQuery("DirectIncomeForMobile", para);
             return ds;
@@ -672,7 +672,7 @@ namespace ArabicaAPI.Models
             {
                   new SqlParameter("@LoginID",LoginId),
                   new SqlParameter("@Mobile",Mobile1)
-                
+
             };
             DataSet ds = DBHelper.ExecuteQuery("WebResetPasswordForMobile", para);
             return ds;
@@ -690,8 +690,8 @@ namespace ArabicaAPI.Models
         public string DisplayName { get; set; }
         public string Password { get; set; }
         public string Mobile1 { get; set; }
-        
-       
+
+
     }
     public class TreeRequest
     {
@@ -729,7 +729,7 @@ namespace ArabicaAPI.Models
         public decimal Amount { get; set; }
         public string SpillById { get; set; }
         public string ImageUrl { get; set; }
-        public string PBV { get;  set; }
+        public string PBV { get; set; }
     }
     public class TreeDetails
     {
@@ -781,5 +781,46 @@ namespace ArabicaAPI.Models
         public string SelfBusiness { get; set; }
         public string PlotNo { get; set; }
         public string SiteName { get; set; }
+    }
+    public class TreeAPI
+    {
+        public List<MyTree> GetGenelogy { get; set; }
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public string LoginId { get; set; }
+        public string Fk_headId { get; set; }
+        public DataSet GetTree()
+        {
+            SqlParameter[] para = {   new SqlParameter("@LoginId", LoginId),
+                 new SqlParameter("@Fk_headId", Fk_headId)
+                                  };
+
+            DataSet ds = DBHelper.ExecuteQuery("GetTree", para);
+            return ds;
+        }
+    }
+
+    public class MyTree
+    {
+        public string Fk_UserId { get; set; }
+        public string SponsorId { get; set; }
+        public string Fk_ParentId { get; set; }
+        public string TeamPermanent { get; set; }
+        public string LoginId { get; set; }
+        public string Fk_SponsorId { get; set; }
+        public string MemberName { get; set; }
+        public string MemberLevel { get; set; }
+
+        public string Id { get; set; }
+        public string Leg { get; set; }
+
+        public string ActivationDate { get; set; }
+        public string ActiveLeft { get; set; }
+        public string ActiveRight { get; set; }
+        public string InactiveLeft { get; set; }
+        public string InactiveRight { get; set; }
+        public string BusinessLeft { get; set; }
+        public string BusinessRight { get; set; }
+        public string ImageURL { get; set; }
     }
 }
