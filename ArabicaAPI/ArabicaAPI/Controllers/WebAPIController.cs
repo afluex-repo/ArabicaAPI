@@ -968,7 +968,7 @@ namespace ArabicaAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, obj1);
         }
-        public HttpResponseMessage Tree(TreeRequest model)
+        public HttpResponseMessage MyTree(TreeRequest model)
         {
             TreeResponse obj = new TreeResponse();
             List<Tree> lst = new List<Tree>();
@@ -1073,18 +1073,18 @@ namespace ArabicaAPI.Controllers
         }
         #region Tree
         [HttpPost]
-        public HttpResponseMessage MyTree(TreeAPI model)
+        public HttpResponseMessage Tree(TreeAPI model)
         {
             TreeAPI obj = new TreeAPI();
             if (model.LoginId == "" || model.LoginId == null)
             {
-                model.Status = "1";
-                model.Message = "Please enter LoginId";
+                obj.Status = "1";
+                obj.Message = "Please enter LoginId";
             }
             if (model.Fk_headId == "" || model.Fk_headId == null)
             {
-                model.Status = "1";
-                model.Message = "Please enter headId";
+                obj.Status = "1";
+                obj.Message = "Please enter headId";
             }
             try
             {
@@ -1094,7 +1094,6 @@ namespace ArabicaAPI.Controllers
 
                     if (ds.Tables[0].Rows[0]["msg"].ToString() == "0")
                     {
-
                         List<MyTree> GetGenelogy = new List<MyTree>();
                         foreach (DataRow r in ds.Tables[0].Rows)
                         {
@@ -1126,22 +1125,27 @@ namespace ArabicaAPI.Controllers
                         obj.LoginId = model.LoginId;
                         obj.Fk_headId = model.Fk_headId;
                     }
+                    else if(ds.Tables[0].Rows[0][0].ToString()=="1")
+                    {
+                        obj.Status = "1";
+                        obj.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
                     else
                     {
-                        model.Status = "1";
-                        model.Message = "No Data Found";
+                        obj.Status = "1";
+                        obj.Message = "No Data Found";
                     }
                 }
                 else
                 {
-                    model.Status = "1";
-                    model.Message = "No Data Found";
+                    obj.Status = "1";
+                    obj.Message = "No Data Found";
                 }
             }
             catch (Exception ex)
             {
-                model.Status = "1";
-                model.Message = ex.Message;
+                obj.Status = "1";
+                obj.Message = ex.Message;
             }
             return Request.CreateResponse(HttpStatusCode.OK, obj);
         }
