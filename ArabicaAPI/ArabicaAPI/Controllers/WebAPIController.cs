@@ -422,6 +422,8 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage BinaryLevelIncome(BinaryLevelIncomeModel obj)
         {
             BinaryLevelIncome model = new BinaryLevelIncome();
+            obj.FromDate = string.IsNullOrEmpty(obj.FromDate) ? null : Common.ConvertToSystemDate(obj.FromDate, "dd/MM/yyyy");
+            obj.ToDate = string.IsNullOrEmpty(obj.ToDate) ? null : Common.ConvertToSystemDate(obj.ToDate, "dd/MM/yyyy");
             List<BinaryLevelIncomeResponse> lst = new List<BinaryLevelIncomeResponse>();
             try
             {
@@ -462,6 +464,8 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage GetLoanIncome(LoanIncomeModel obj)
         {
             LoanIncome model = new LoanIncome();
+            obj.FromDate = string.IsNullOrEmpty(obj.FromDate) ? null : Common.ConvertToSystemDate(obj.FromDate, "dd/MM/yyyy");
+            obj.ToDate = string.IsNullOrEmpty(obj.ToDate) ? null : Common.ConvertToSystemDate(obj.ToDate, "dd/MM/yyyy");
             List<LoanIncomeResponse> lst = new List<LoanIncomeResponse>();
             try
             {
@@ -469,7 +473,7 @@ namespace ArabicaAPI.Controllers
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     model.Status = "0";
-                    model.Message = "Valid";
+                    model.Message = "Record Found";
                     foreach (DataRow r in ds.Tables[0].Rows)
                     {
                         LoanIncomeResponse obj1 = new LoanIncomeResponse();
@@ -488,7 +492,7 @@ namespace ArabicaAPI.Controllers
                 else
                 {
                     model.Status = "1";
-                    model.Message = "Invalid";
+                    model.Message = "No Record Found";
                 }
             }
             catch (Exception ex)
@@ -749,6 +753,8 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage GetReferalWallet(ReferalTransactions model)
         {
             ReferalTransactionsList obj1 = new ReferalTransactionsList();
+            model.FromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            model.ToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
             List<ReferalTransactionsResponse> lst = new List<ReferalTransactionsResponse>();
             try
             {
@@ -797,6 +803,9 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage GetBinaryWallet(BTranzactionDetails model)
         {
             BTranzactionDetailsList obj1 = new BTranzactionDetailsList();
+
+            model.FromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            model.ToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
             List<BTranzactionDetailsResponse> lst = new List<BTranzactionDetailsResponse>();
             try
             {
@@ -845,6 +854,8 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage RoiWallet(DTranzactionDetails model)
         {
             DTranzactionDetailsList obj1 = new DTranzactionDetailsList();
+            model.FromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            model.ToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
             List<DTranzactionDetailsResponse> lst = new List<DTranzactionDetailsResponse>();
             try
             {
@@ -895,6 +906,8 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage DirectIncome(DirectIncome model)
         {
             DirectIncomeList obj1 = new DirectIncomeList();
+            model.FromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            model.ToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
             List<DirectIncomeResponse> lst = new List<DirectIncomeResponse>();
             try
             {
