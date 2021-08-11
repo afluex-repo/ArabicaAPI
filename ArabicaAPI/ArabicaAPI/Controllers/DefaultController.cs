@@ -13,5 +13,9 @@ namespace ArabicaAPI.Controllers
         {
             return View();
         }
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
     }
 }

@@ -385,17 +385,25 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = obj.SignUp();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    model.Status = "0";
-                    model.Message = "Registered Successfully";
-                    model.MemId = ds.Tables[0].Rows[0]["MemId"].ToString();
-                    model.MSG = ds.Tables[0].Rows[0]["MSG"].ToString();
-                    model.LoginID = ds.Tables[0].Rows[0]["LoginID"].ToString();
-                    model.Password = ds.Tables[0].Rows[0]["Password"].ToString();
-                    model.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
-                    model.SponsorID = ds.Tables[0].Rows[0]["SponsorID"].ToString();
-                    model.Sponsorname = ds.Tables[0].Rows[0]["Sponsorname"].ToString();
-                    model.MobileNO = ds.Tables[0].Rows[0]["MobileNO"].ToString();
-                    model.TransactionPassword = ds.Tables[0].Rows[0]["TransactionPassword"].ToString();
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
+                    {
+                        model.Status = "1";
+                        model.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                    else
+                    {
+                        model.Status = "0";
+                        model.Message = "Registered Successfully";
+                        model.MemId = ds.Tables[0].Rows[0]["MemId"].ToString();
+                        model.MSG = ds.Tables[0].Rows[0]["MSG"].ToString();
+                        model.LoginID = ds.Tables[0].Rows[0]["LoginID"].ToString();
+                        model.Password = ds.Tables[0].Rows[0]["Password"].ToString();
+                        model.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
+                        model.SponsorID = ds.Tables[0].Rows[0]["SponsorID"].ToString();
+                        model.Sponsorname = ds.Tables[0].Rows[0]["Sponsorname"].ToString();
+                        model.MobileNO = ds.Tables[0].Rows[0]["MobileNO"].ToString();
+                        model.TransactionPassword = ds.Tables[0].Rows[0]["TransactionPassword"].ToString();
+                    }
                 }
                 else
                 {
@@ -586,6 +594,16 @@ namespace ArabicaAPI.Controllers
                         model.PDetails = ds.Tables[0].Rows[0]["PDetails"].ToString();
                         model.Mobile1 = ds.Tables[0].Rows[0]["Mobile1"].ToString();
                     }
+                    else if (ds.Tables[0].Rows[0][0].ToString() == "2")
+                    {
+                        model.Status = "1";
+                        model.Message = "Not Sufficient Amount";
+                    }
+                    else if (ds.Tables[0].Rows[0][0].ToString() == "101")
+                    {
+                        model.Status = "1";
+                        model.Message = "Member is not Permanent";
+                    }
                     else
                     {
                         model.Status = "1";
@@ -737,22 +755,30 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = model.GetReferalTransactions();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    obj1.Status = "0";
-                    obj1.Message = "Record Found";
-                    foreach (DataRow r in ds.Tables[0].Rows)
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
                     {
-                        ReferalTransactionsResponse obj = new ReferalTransactionsResponse();
-                        obj.id = r["id"].ToString();
-                        obj.fk_memid = r["fk_memid"].ToString();
-                        obj.Status = r["Status"].ToString();
-                        obj.TransDate = r["TransDate"].ToString();
-                        obj.Narration = r["Narration"].ToString();
-                        obj.DrAmount = r["DrAmount"].ToString();
-                        obj.CrAmount = r["CrAmount"].ToString();
-                        obj.Balance = r["Balance"].ToString();
-                        lst.Add(obj);
+                        obj1.Status = "1";
+                        obj1.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
                     }
-                    obj1.lstReferalTransactions = lst;
+                    else
+                    {
+                        obj1.Status = "0";
+                        obj1.Message = "Record Found";
+                        foreach (DataRow r in ds.Tables[0].Rows)
+                        {
+                            ReferalTransactionsResponse obj = new ReferalTransactionsResponse();
+                            obj.id = r["id"].ToString();
+                            obj.fk_memid = r["fk_memid"].ToString();
+                            obj.Status = r["Status"].ToString();
+                            obj.TransDate = r["TransDate"].ToString();
+                            obj.Narration = r["Narration"].ToString();
+                            obj.DrAmount = r["DrAmount"].ToString();
+                            obj.CrAmount = r["CrAmount"].ToString();
+                            obj.Balance = r["Balance"].ToString();
+                            lst.Add(obj);
+                        }
+                        obj1.lstReferalTransactions = lst;
+                    }
                 }
                 else
                 {
@@ -777,22 +803,30 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = model.GetBTranzactionDetails();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    obj1.Status = "0";
-                    obj1.Message = "Record Found";
-                    foreach (DataRow r in ds.Tables[0].Rows)
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
                     {
-                        BTranzactionDetailsResponse obj = new BTranzactionDetailsResponse();
-                        obj.id = r["id"].ToString();
-                        obj.fk_memid = r["fk_memid"].ToString();
-                        obj.Status = r["Status"].ToString();
-                        obj.TransDate = r["TransDate"].ToString();
-                        obj.Narration = r["Narration"].ToString();
-                        obj.DrAmount = r["DrAmount"].ToString();
-                        obj.CrAmount = r["CrAmount"].ToString();
-                        obj.Balance = r["Balance"].ToString();
-                        lst.Add(obj);
+                        obj1.Status = "1";
+                        obj1.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
                     }
-                    obj1.lstBTranzactionDetails = lst;
+                    else
+                    {
+                        obj1.Status = "0";
+                        obj1.Message = "Record Found";
+                        foreach (DataRow r in ds.Tables[0].Rows)
+                        {
+                            BTranzactionDetailsResponse obj = new BTranzactionDetailsResponse();
+                            obj.id = r["id"].ToString();
+                            obj.fk_memid = r["fk_memid"].ToString();
+                            obj.Status = r["Status"].ToString();
+                            obj.TransDate = r["TransDate"].ToString();
+                            obj.Narration = r["Narration"].ToString();
+                            obj.DrAmount = r["DrAmount"].ToString();
+                            obj.CrAmount = r["CrAmount"].ToString();
+                            obj.Balance = r["Balance"].ToString();
+                            lst.Add(obj);
+                        }
+                        obj1.lstBTranzactionDetails = lst;
+                    }
                 }
                 else
                 {
@@ -817,22 +851,30 @@ namespace ArabicaAPI.Controllers
                 DataSet ds = model.GetDTranzactionDetails();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    obj1.Status = "0";
-                    obj1.Message = "Record Found";
-                    foreach (DataRow r in ds.Tables[0].Rows)
+                    if (ds.Tables[0].Rows[0][0].ToString() == "0")
                     {
-                        DTranzactionDetailsResponse obj = new DTranzactionDetailsResponse();
-                        obj.id = r["id"].ToString();
-                        obj.fk_memid = r["fk_memid"].ToString();
-                        obj.Status = r["Status"].ToString();
-                        obj.TransDate = r["TransDate"].ToString();
-                        obj.Narration = r["Narration"].ToString();
-                        obj.DrAmount = r["DrAmount"].ToString();
-                        obj.CrAmount = r["CrAmount"].ToString();
-                        obj.Balance = r["Balance"].ToString();
-                        lst.Add(obj);
+                        obj1.Status = "1";
+                        obj1.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
                     }
-                    obj1.lstDTranzactionDetails = lst;
+                    else
+                    {
+                        obj1.Status = "0";
+                        obj1.Message = "Record Found";
+                        foreach (DataRow r in ds.Tables[0].Rows)
+                        {
+                            DTranzactionDetailsResponse obj = new DTranzactionDetailsResponse();
+                            obj.id = r["id"].ToString();
+                            obj.fk_memid = r["fk_memid"].ToString();
+                            obj.Status = r["Status"].ToString();
+                            obj.TransDate = r["TransDate"].ToString();
+                            obj.Narration = r["Narration"].ToString();
+                            obj.DrAmount = r["DrAmount"].ToString();
+                            obj.CrAmount = r["CrAmount"].ToString();
+                            obj.Balance = r["Balance"].ToString();
+                            lst.Add(obj);
+                        }
+                        obj1.lstDTranzactionDetails = lst;
+                    }
                 }
                 else
                 {
@@ -926,5 +968,187 @@ namespace ArabicaAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, obj1);
         }
+        public HttpResponseMessage MyTree(TreeRequest model)
+        {
+            TreeResponse obj = new TreeResponse();
+            List<Tree> lst = new List<Tree>();
+            List<TreeDetails> lstDetails = new List<TreeDetails>();
+            try
+            {
+                DataSet ds = model.GetTreeData();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    obj.Status = "0";
+                    obj.Message = "Record Found";
+                    foreach (DataRow r in ds.Tables[0].Rows)
+                    {
+                        Tree obj1 = new Tree();
+                        obj1.FK_MemId = r["MemId"].ToString();
+                        obj1.ParentId = r["ParentId"].ToString();
+                        obj1.SponsorId = r["SponsorId"].ToString();
+                        obj1.LoginId = r["LoginId"].ToString();
+                        obj1.MemberName = r["MemberName"].ToString();
+                        obj1.TemPermanent = r["TemPermanent"].ToString();
+                        obj1.Leg = r["Leg"].ToString();
+                        obj1.MemberLevel = r["MemberLevel"].ToString();
+                        obj1.PBV = r["PBV"].ToString();
+                        obj1.PackageName = r["PackageName"].ToString();
+                        obj1.Amount = Convert.ToDecimal(r["Amount"]);
+                        obj1.SpillById = r["SpillById"].ToString();
+                        obj1.ImageUrl = r["IDStatus"].ToString();
+                        lst.Add(obj1);
+                    }
+                    obj.lst = lst;
+                    if (ds.Tables[1].Rows.Count > 0)
+                    {
+                        foreach (DataRow r1 in ds.Tables[1].Rows)
+                        {
+                            TreeDetails obj2 = new TreeDetails();
+                            obj2.LoginId = r1["LoginId"].ToString();
+                            obj2.FK_MemId = r1["FK_MemId"].ToString();
+                            obj2.DisplayName = r1["DisplayName"].ToString();
+                            obj2.JoiningDate = r1["JoiningDate"].ToString();
+                            obj2.PermanentDate = r1["PermanentDate"].ToString();
+                            obj2.Status = r1["Status"].ToString();
+                            obj2.SponsorId = r1["SponsorId"].ToString();
+                            obj2.SponsorName = r1["SponsorName"].ToString();
+                            obj2.ParentId = r1["ParentId"].ToString();
+                            obj2.ParentName = r1["ParentName"].ToString();
+                            obj2.ProductName = r1["ProductName"].ToString();
+                            obj2.ReferralRegisteredLeft = r1["ReferralRegisteredLeft"].ToString();
+                            obj2.ReferralRegisteredRight = r1["ReferralRegisteredRight"].ToString();
+                            obj2.ReferralConfirmedLeft = r1["ReferralConfirmedLeft"].ToString();
+                            obj2.ReferralConfirmedRight = r1["ReferralConfirmedRight"].ToString();
+                            obj2.AssociatesRegisteredLeft = r1["AssociatesRegisteredLeft"].ToString();
+                            obj2.AssociatesRegisteredRight = r1["AssociatesRegisteredRight"].ToString();
+                            obj2.AssociatesConfirmedLeft = r1["AssociatesConfirmedLeft"].ToString();
+                            obj2.AssociatesConfirmedRight = r1["AssociatesConfirmedRight"].ToString();
+                            obj2.TotalLeft = r1["TotalLeft"].ToString();
+                            obj2.TotalRight = r1["TotalRight"].ToString();
+                            obj2.TotalPair = r1["TotalPair"].ToString();
+                            obj2.AllLeft = r1["AllLeft"].ToString();
+                            obj2.AllRight = r1["AllRight"].ToString();
+                            obj2.UsedLeft = r1["UsedLeft"].ToString();
+                            obj2.UsedRight = r1["UsedRight"].ToString();
+                            obj2.UsedPair = r1["UsedPair"].ToString();
+                            obj2.CurrentLeft = r1["CurrentLeft"].ToString();
+                            obj2.CurrentRight = r1["CurrentRight"].ToString();
+                            obj2.CurrentPair = r1["CurrentPair"].ToString();
+                            obj2.PermanentLeft = r1["PermanemtLeft"].ToString();
+                            obj2.PermanentRight = r1["PermanemtRight"].ToString();
+                            obj2.PinAmount = r1["PinAmount"].ToString();
+                            obj2.TopUpPinAmount = r1["TopUpPinAmount"].ToString();
+                            obj2.PendingPayment = r1["PendingPayment"].ToString();
+                            obj2.PBV = r1["PBV"].ToString();
+                            obj2.TemPermanent = r1["TemPermanent"].ToString();
+                            obj2.LeftBooking = r1["LeftBooking"].ToString();
+                            obj2.RightBooking = r1["RightBooking"].ToString();
+                            obj2.TotalBooking = r1["TotalBooking"].ToString();
+                            obj2.LeftAllotment = r1["LeftAllotment"].ToString();
+                            obj2.RightAllotment = r1["RightAllotment"].ToString();
+                            obj2.TotalAllotment = r1["TotalAllotment"].ToString();
+                            obj2.TemPermanent = r1["TemPermanent"].ToString();
+                            obj2.SelfBooking = r1["SelfBooking"].ToString();
+                            obj2.SelfAllotment = r1["SelfAllotment"].ToString();
+                            obj2.SelfBusiness = r1["SelfBusiness"].ToString();
+                            obj2.PlotNo = r1["PlotNo"].ToString();
+                            obj2.SiteName = r1["SiteName"].ToString();
+                            lstDetails.Add(obj2);
+                        }
+                        obj.lstDetails = lstDetails;
+                    }
+                }
+                else
+                {
+                    obj.Status = "1";
+                    obj.Message = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj.Status = "1";
+                obj.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj);
+        }
+        #region Tree
+        [HttpPost]
+        public HttpResponseMessage Tree(TreeAPI model)
+        {
+            TreeAPI obj = new TreeAPI();
+            if (model.LoginId == "" || model.LoginId == null)
+            {
+                obj.Status = "1";
+                obj.Message = "Please enter LoginId";
+            }
+            if (model.Fk_headId == "" || model.Fk_headId == null)
+            {
+                obj.Status = "1";
+                obj.Message = "Please enter headId";
+            }
+            try
+            {
+                DataSet ds = model.GetTree();
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
+
+                    if (ds.Tables[0].Rows[0]["msg"].ToString() == "0")
+                    {
+                        List<MyTree> GetGenelogy = new List<MyTree>();
+                        foreach (DataRow r in ds.Tables[0].Rows)
+                        {
+                            MyTree obj1 = new MyTree();
+                            obj1.Fk_UserId = r["Fk_UserId"].ToString();
+                            obj1.Fk_ParentId = r["Fk_ParentId"].ToString();
+                            obj1.Fk_SponsorId = r["Fk_SponsorId"].ToString();
+                            obj1.SponsorId = r["SponsorId"].ToString();
+                            obj1.LoginId = r["LoginId"].ToString();
+                            obj1.TeamPermanent = r["TeamPermanent"].ToString();
+                            obj1.MemberName = r["MemberName"].ToString();
+                            obj1.MemberLevel = r["MemberLevel"].ToString();
+                            obj1.Leg = r["Leg"].ToString();
+                            obj1.Id = r["Id"].ToString();
+
+                            obj1.ActivationDate = r["ActivationDate"].ToString();
+                            obj1.ActiveLeft = r["ActiveLeft"].ToString();
+                            obj1.ActiveRight = r["ActiveRight"].ToString();
+                            obj1.InactiveLeft = r["InactiveLeft"].ToString();
+                            obj1.InactiveRight = r["InactiveRight"].ToString();
+                            obj1.BusinessLeft = r["BusinessLeft"].ToString();
+                            obj1.BusinessRight = r["BusinessRight"].ToString();
+                            obj1.ImageURL = r["ImageURL"].ToString();
+                            GetGenelogy.Add(obj1);
+                        }
+                        obj.GetGenelogy = GetGenelogy;
+                        obj.Message = "Data Found";
+                        obj.Status = "0";
+                        obj.LoginId = model.LoginId;
+                        obj.Fk_headId = model.Fk_headId;
+                    }
+                    else if(ds.Tables[0].Rows[0][0].ToString()=="1")
+                    {
+                        obj.Status = "1";
+                        obj.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                    else
+                    {
+                        obj.Status = "1";
+                        obj.Message = "No Data Found";
+                    }
+                }
+                else
+                {
+                    obj.Status = "1";
+                    obj.Message = "No Data Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj.Status = "1";
+                obj.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, obj);
+        }
+        #endregion
     }
 }
