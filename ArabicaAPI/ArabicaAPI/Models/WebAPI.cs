@@ -338,8 +338,8 @@ namespace ArabicaAPI.Models
     public class BinaryLevelIncomeModel
     {
         public string Fk_MemId { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public DataSet GetBinaryLevelIncome()
         {
             SqlParameter[] para = {
@@ -371,8 +371,8 @@ namespace ArabicaAPI.Models
     public class LoanIncomeModel
     {
         public string Fk_MemId { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public DataSet LoanIncome()
         {
             SqlParameter[] para = {
@@ -528,8 +528,8 @@ namespace ArabicaAPI.Models
     public class ReferalTransactions
     {
         public string fk_memid { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public DataSet GetReferalTransactions()
         {
             SqlParameter[] para =
@@ -562,8 +562,8 @@ namespace ArabicaAPI.Models
     public class BTranzactionDetails
     {
         public string fk_memid { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public DataSet GetBTranzactionDetails()
         {
             SqlParameter[] para =
@@ -597,8 +597,8 @@ namespace ArabicaAPI.Models
      public class DTranzactionDetails
     {
         public string fk_memid { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public DataSet GetDTranzactionDetails()
         {
             SqlParameter[] para =
@@ -635,8 +635,8 @@ namespace ArabicaAPI.Models
     public class DirectIncome
     {
         public string Fk_MemId { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public DataSet GetDirectIncome()
         {
             SqlParameter[] para =
