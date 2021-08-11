@@ -631,6 +631,9 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage MyTeam(TeamRequest obj)
         {
             TeamReponse model = new TeamReponse();
+            obj.FromDate = string.IsNullOrEmpty(obj.FromDate) ? null : Common.ConvertToSystemDate(obj.FromDate, "dd/MM/yyyy");
+            obj.ToDate = string.IsNullOrEmpty(obj.ToDate) ? null : Common.ConvertToSystemDate(obj.ToDate, "dd/MM/yyyy");
+
             try
             {
                 List<Team> lst = new List<Team>();

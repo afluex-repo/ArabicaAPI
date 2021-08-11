@@ -427,8 +427,8 @@ namespace ArabicaAPI.Models
     }
     public class TeamRequest
     {
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
         public string LoginId { get; set; }
         public string Leg { get; set; }
         public string Down { get; set; }
