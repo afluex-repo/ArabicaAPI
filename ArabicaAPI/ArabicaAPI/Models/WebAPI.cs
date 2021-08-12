@@ -822,5 +822,6 @@ namespace ArabicaAPI.Models
         public string BusinessLeft { get; set; }
         public string BusinessRight { get; set; }
         public string ImageURL { get; set; }
+        public string TopUpAmount { get; set; }
     }
 }
