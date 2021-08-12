@@ -631,6 +631,22 @@ namespace ArabicaAPI.Controllers
         public HttpResponseMessage MyTeam(TeamRequest obj)
         {
             TeamReponse model = new TeamReponse();
+            if (obj.FromDate == "null")
+            {
+                obj.FromDate = null;
+            }
+            if (obj.ToDate == "null")
+            {
+                obj.ToDate = null;
+            }
+            if (obj.Status == "null")
+            {
+                obj.Status = null;
+            }
+            if (obj.Leg == "null")
+            {
+                obj.Leg = null;
+            }
             obj.FromDate = string.IsNullOrEmpty(obj.FromDate) ? null : Common.ConvertToSystemDate(obj.FromDate, "dd/MM/yyyy");
             obj.ToDate = string.IsNullOrEmpty(obj.ToDate) ? null : Common.ConvertToSystemDate(obj.ToDate, "dd/MM/yyyy");
 
@@ -638,7 +654,7 @@ namespace ArabicaAPI.Controllers
             {
                 List<Team> lst = new List<Team>();
                 DataSet ds = obj.GetMemberDownline();
-                if (ds != null && ds.Tables.Count > 0)
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     model.Status = "0";
                     model.Message = "Record Found";
@@ -1133,6 +1149,7 @@ namespace ArabicaAPI.Controllers
                             obj1.BusinessLeft = r["BusinessLeft"].ToString();
                             obj1.BusinessRight = r["BusinessRight"].ToString();
                             obj1.ImageURL = r["ImageURL"].ToString();
+                            obj1.TopUpAmount = r["PinAmount"].ToString();
                             GetGenelogy.Add(obj1);
                         }
                         obj.GetGenelogy = GetGenelogy;
@@ -1141,7 +1158,7 @@ namespace ArabicaAPI.Controllers
                         obj.LoginId = model.LoginId;
                         obj.Fk_headId = model.Fk_headId;
                     }
-                    else if(ds.Tables[0].Rows[0][0].ToString()=="1")
+                    else if (ds.Tables[0].Rows[0][0].ToString() == "1")
                     {
                         obj.Status = "1";
                         obj.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
