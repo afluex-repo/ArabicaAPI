@@ -107,8 +107,7 @@ namespace ArabicaAPI.Models
         public int Amount { get; set; }
         public DataSet GetPackage()
         {
-            SqlParameter[] para = { new SqlParameter("@PackageId", PackageId), };
-            DataSet ds = DBHelper.ExecuteQuery("ProductDetailTopForMobile", para);
+            DataSet ds = DBHelper.ExecuteQuery("ProductDetailTopForMobile");
             return ds;
         }
         public DataSet GetProductDetailForReTopUp()
@@ -821,6 +820,8 @@ namespace ArabicaAPI.Models
         public string InactiveRight { get; set; }
         public string BusinessLeft { get; set; }
         public string BusinessRight { get; set; }
+        public string TotalBusiness { get; set; }
         public string ImageURL { get; set; }
+        public string TopUpAmount { get; set; }
     }
 }
