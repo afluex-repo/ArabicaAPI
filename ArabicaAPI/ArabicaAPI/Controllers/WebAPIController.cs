@@ -389,6 +389,7 @@ namespace ArabicaAPI.Controllers
                     {
                         model.Status = "1";
                         model.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                       
                     }
                     else
                     {
@@ -403,6 +404,15 @@ namespace ArabicaAPI.Controllers
                         model.Sponsorname = ds.Tables[0].Rows[0]["Sponsorname"].ToString();
                         model.MobileNO = ds.Tables[0].Rows[0]["MobileNO"].ToString();
                         model.TransactionPassword = ds.Tables[0].Rows[0]["TransactionPassword"].ToString();
+                        try
+                        {
+                            string str2 = "Dear " + ds.Tables[0].Rows[0]["DisplayName"].ToString() + ",You have been successfully registered  in Arabica Trading. Your Login Id is " + ds.Tables[0].Rows[0]["LoginID"].ToString() + ", password is "+(ds.Tables[0].Rows[0]["Password"].ToString()) +" and Transaction Pin is " + (ds.Tables[0].Rows[0]["TransactionPassword"].ToString());
+                            BLSMS.SendSMSNew(model.MobileNO, str2);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw;
+                        }
                     }
                 }
                 else
@@ -638,7 +648,7 @@ namespace ArabicaAPI.Controllers
             {
                 List<Team> lst = new List<Team>();
                 DataSet ds = obj.GetMemberDownline();
-                if (ds != null && ds.Tables.Count > 0)
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     model.Status = "0";
                     model.Message = "Record Found";
