@@ -107,8 +107,7 @@ namespace ArabicaAPI.Models
         public int Amount { get; set; }
         public DataSet GetPackage()
         {
-            SqlParameter[] para = { new SqlParameter("@PackageId", PackageId), };
-            DataSet ds = DBHelper.ExecuteQuery("ProductDetailTopForMobile", para);
+            DataSet ds = DBHelper.ExecuteQuery("ProductDetailTopForMobile");
             return ds;
         }
         public DataSet GetProductDetailForReTopUp()
