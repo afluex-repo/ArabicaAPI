@@ -14,7 +14,7 @@ namespace ArabicaAPI.Models
         {
             try
             {
-                //connectionString = "Data Source=.;Initial Catalog=nousapnew;Integrated Security=true;";
+                //connectionString = "Data Source=103.48.51.111,1232;Initial Catalog=nousap;User Id=nousap;Password=pE^1xg24;Integrated Security=false;";
                 connectionString = "Data Source=198.71.226.6;Initial Catalog=nousap;User Id=nousap;Password=pE^1xg24;Integrated Security=false;"; 
             }
             catch (Exception)
