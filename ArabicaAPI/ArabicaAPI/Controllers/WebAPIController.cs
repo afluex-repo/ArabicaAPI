@@ -169,8 +169,9 @@ namespace ArabicaAPI.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage GetProduct(Package model)
+        public HttpResponseMessage GetProduct()
         {
+            Package model = new Package();
             PackageList obj1 = new PackageList();
             List<PackageResponse> lst = new List<PackageResponse>();
             try
@@ -503,8 +504,9 @@ namespace ArabicaAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, model);
         }
         [HttpPost]
-        public HttpResponseMessage GetProductForReInvestment(Package model)
+        public HttpResponseMessage GetProductForReInvestment()
         {
+            Package model = new Package();
             PackageList obj1 = new PackageList();
             List<PackageResponse> lst = new List<PackageResponse>();
             try
