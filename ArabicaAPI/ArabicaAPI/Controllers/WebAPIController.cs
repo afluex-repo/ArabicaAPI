@@ -390,7 +390,7 @@ namespace ArabicaAPI.Controllers
                     {
                         model.Status = "1";
                         model.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
-                       
+
                     }
                     else
                     {
@@ -407,7 +407,7 @@ namespace ArabicaAPI.Controllers
                         model.TransactionPassword = ds.Tables[0].Rows[0]["TransactionPassword"].ToString();
                         try
                         {
-                            string str2 = "Dear " + ds.Tables[0].Rows[0]["DisplayName"].ToString() + ",You have been successfully registered  in Arabica Trading. Your Login Id is " + ds.Tables[0].Rows[0]["LoginID"].ToString() + ", password is "+(ds.Tables[0].Rows[0]["Password"].ToString()) +" and Transaction Pin is " + (ds.Tables[0].Rows[0]["TransactionPassword"].ToString());
+                            string str2 = "Dear " + ds.Tables[0].Rows[0]["DisplayName"].ToString() + ",You have been successfully registered  in Arabica Trading. Your Login Id is " + ds.Tables[0].Rows[0]["LoginID"].ToString() + ", password is " + (ds.Tables[0].Rows[0]["Password"].ToString()) + " and Transaction Pin is " + (ds.Tables[0].Rows[0]["TransactionPassword"].ToString());
                             BLSMS.SendSMSNew(model.MobileNO, str2);
                         }
                         catch (Exception ex)
@@ -443,19 +443,25 @@ namespace ArabicaAPI.Controllers
                 {
                     model.Status = "0";
                     model.Message = "Record Found";
+                    decimal sum = 0;
+                    int i = 1;
                     foreach (DataRow r in ds.Tables[0].Rows)
                     {
                         BinaryLevelIncomeResponse obj1 = new BinaryLevelIncomeResponse();
-                        obj1.Fk_MemId = ds.Tables[0].Rows[0]["Fk_MemId"].ToString();
-                        obj1.LoginID = ds.Tables[0].Rows[0]["LoginID"].ToString();
-                        obj1.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
-                        obj1.CurrentDate = ds.Tables[0].Rows[0]["CurrentDate"].ToString();
-                        obj1.Amount = ds.Tables[0].Rows[0]["Amount"].ToString();
-                        obj1.IncomeType = ds.Tables[0].Rows[0]["IncomeType"].ToString();
-                        obj1.BusinessAmount = ds.Tables[0].Rows[0]["BusinessAmount"].ToString();
-                        obj1.CommissionPercentage = ds.Tables[0].Rows[0]["CommissionPercentage"].ToString();
+                        obj1.SrNo = i;
+                        obj1.Fk_MemId = r["Fk_MemId"].ToString();
+                        obj1.LoginID = r["LoginID"].ToString();
+                        obj1.DisplayName = r["DisplayName"].ToString();
+                        obj1.CurrentDate = r["CurrentDate"].ToString();
+                        obj1.Amount = r["Amount"].ToString();
+                        obj1.IncomeType = r["IncomeType"].ToString();
+                        obj1.BusinessAmount = r["BusinessAmount"].ToString();
+                        obj1.CommissionPercentage = r["CommissionPercentage"].ToString();
+                        sum = sum + Convert.ToDecimal(r["Amount"]);
                         lst.Add(obj1);
+                        i++;
                     }
+                    model.Total = sum;
                     model.lst = lst;
                 }
                 else
@@ -485,20 +491,26 @@ namespace ArabicaAPI.Controllers
                 {
                     model.Status = "0";
                     model.Message = "Record Found";
+                    decimal sum = 0;
+                    int i = 1;
                     foreach (DataRow r in ds.Tables[0].Rows)
                     {
                         LoanIncomeResponse obj1 = new LoanIncomeResponse();
-                        obj1.Fk_MemId = ds.Tables[0].Rows[0]["Fk_MemId"].ToString();
-                        obj1.LoginID = ds.Tables[0].Rows[0]["LoginID"].ToString();
-                        obj1.DisplayName = ds.Tables[0].Rows[0]["DisplayName"].ToString();
-                        obj1.CurrentDate = ds.Tables[0].Rows[0]["CurrentDate"].ToString();
-                        obj1.Amount = ds.Tables[0].Rows[0]["Amount"].ToString();
-                        obj1.IncomeType = ds.Tables[0].Rows[0]["IncomeType"].ToString();
-                        obj1.BusinessAmount = ds.Tables[0].Rows[0]["BusinessAmount"].ToString();
-                        obj1.CommissionPercentage = ds.Tables[0].Rows[0]["CommissionPercentage"].ToString();
+                        obj1.SrNo = i;
+                        obj1.Fk_MemId = r["Fk_MemId"].ToString();
+                        obj1.LoginID = r["LoginID"].ToString();
+                        obj1.DisplayName = r["DisplayName"].ToString();
+                        obj1.CurrentDate = r["CurrentDate"].ToString();
+                        obj1.Amount = r["Amount"].ToString();
+                        obj1.IncomeType = r["IncomeType"].ToString();
+                        obj1.BusinessAmount = r["BusinessAmount"].ToString();
+                        obj1.CommissionPercentage = r["CommissionPercentage"].ToString();
+                        sum = sum + Convert.ToDecimal(r["Amount"]);
                         lst.Add(obj1);
+                        i++;
                     }
                     model.lst = lst;
+                    model.Total = sum;
                 }
                 else
                 {
@@ -734,6 +746,7 @@ namespace ArabicaAPI.Controllers
             List<Wallet> lst = new List<Wallet>();
             try
             {
+                int i = 1;
                 DataSet ds = obj.GetEWalletReport();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
@@ -742,6 +755,7 @@ namespace ArabicaAPI.Controllers
                     foreach (DataRow r in ds.Tables[0].Rows)
                     {
                         Wallet obj1 = new Wallet();
+                        obj1.SrNo = i;
                         obj1.Id = r["id"].ToString();
                         obj1.FK_MemId = r["fk_memid"].ToString();
                         obj1.Status = r["Status"].ToString();
@@ -751,6 +765,7 @@ namespace ArabicaAPI.Controllers
                         obj1.CrAmount = Convert.ToDecimal(r["CrAmount"]);
                         obj1.Balance = Convert.ToDecimal(r["Balance"]);
                         lst.Add(obj1);
+                        i++;
                     }
                     model.lst = lst;
                     if (ds.Tables[1].Rows.Count > 0)
@@ -789,6 +804,9 @@ namespace ArabicaAPI.Controllers
             List<ReferalTransactionsResponse> lst = new List<ReferalTransactionsResponse>();
             try
             {
+                decimal TotalCr = 0;
+                decimal TotalDr = 0;
+                int i = 1;
                 DataSet ds = model.GetReferalTransactions();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
@@ -804,6 +822,7 @@ namespace ArabicaAPI.Controllers
                         foreach (DataRow r in ds.Tables[0].Rows)
                         {
                             ReferalTransactionsResponse obj = new ReferalTransactionsResponse();
+                            obj.SrNo = i;
                             obj.id = r["id"].ToString();
                             obj.fk_memid = r["fk_memid"].ToString();
                             obj.Status = r["Status"].ToString();
@@ -811,10 +830,15 @@ namespace ArabicaAPI.Controllers
                             obj.Narration = r["Narration"].ToString();
                             obj.DrAmount = r["DrAmount"].ToString();
                             obj.CrAmount = r["CrAmount"].ToString();
+                            TotalCr = TotalCr + Convert.ToDecimal(r["CrAmount"]);
+                            TotalDr = TotalDr + Convert.ToDecimal(r["DrAmount"]);
                             obj.Balance = r["Balance"].ToString();
                             lst.Add(obj);
+                            i++;
                         }
                         obj1.lstReferalTransactions = lst;
+                        obj1.TotalCrAmount = TotalCr;
+                        obj1.TotalDrAmount = TotalDr;
                     }
                 }
                 else
@@ -840,6 +864,9 @@ namespace ArabicaAPI.Controllers
             List<BTranzactionDetailsResponse> lst = new List<BTranzactionDetailsResponse>();
             try
             {
+                decimal TotalCr = 0;
+                decimal TotalDr = 0;
+                int i = 1;
                 DataSet ds = model.GetBTranzactionDetails();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
@@ -855,6 +882,7 @@ namespace ArabicaAPI.Controllers
                         foreach (DataRow r in ds.Tables[0].Rows)
                         {
                             BTranzactionDetailsResponse obj = new BTranzactionDetailsResponse();
+                            obj.SrNo = i;
                             obj.id = r["id"].ToString();
                             obj.fk_memid = r["fk_memid"].ToString();
                             obj.Status = r["Status"].ToString();
@@ -862,10 +890,15 @@ namespace ArabicaAPI.Controllers
                             obj.Narration = r["Narration"].ToString();
                             obj.DrAmount = r["DrAmount"].ToString();
                             obj.CrAmount = r["CrAmount"].ToString();
+                            TotalCr = TotalCr + Convert.ToDecimal(r["CrAmount"]);
+                            TotalDr = TotalDr + Convert.ToDecimal(r["DrAmount"]);
                             obj.Balance = r["Balance"].ToString();
                             lst.Add(obj);
+                            i++;
                         }
                         obj1.lstBTranzactionDetails = lst;
+                        obj1.TotalCrAmount = TotalCr;
+                        obj1.TotalDrAmount = TotalDr;
                     }
                 }
                 else
@@ -890,6 +923,9 @@ namespace ArabicaAPI.Controllers
             List<DTranzactionDetailsResponse> lst = new List<DTranzactionDetailsResponse>();
             try
             {
+                int i = 1;
+                decimal TotalCr = 0;
+                decimal TotalDr = 0;
                 DataSet ds = model.GetDTranzactionDetails();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
@@ -905,6 +941,7 @@ namespace ArabicaAPI.Controllers
                         foreach (DataRow r in ds.Tables[0].Rows)
                         {
                             DTranzactionDetailsResponse obj = new DTranzactionDetailsResponse();
+                            obj.SrNo = i;
                             obj.id = r["id"].ToString();
                             obj.fk_memid = r["fk_memid"].ToString();
                             obj.Status = r["Status"].ToString();
@@ -912,10 +949,15 @@ namespace ArabicaAPI.Controllers
                             obj.Narration = r["Narration"].ToString();
                             obj.DrAmount = r["DrAmount"].ToString();
                             obj.CrAmount = r["CrAmount"].ToString();
+                            TotalCr = TotalCr + Convert.ToDecimal(r["CrAmount"]);
+                            TotalDr = TotalDr + Convert.ToDecimal(r["DrAmount"]);
                             obj.Balance = r["Balance"].ToString();
                             lst.Add(obj);
+                            i++;
                         }
                         obj1.lstDTranzactionDetails = lst;
+                        obj1.TotalCrAmount = TotalCr;
+                        obj1.TotalDrAmount = TotalDr;
                     }
                 }
                 else
@@ -947,9 +989,12 @@ namespace ArabicaAPI.Controllers
                 {
                     obj1.Status = "0";
                     obj1.Message = "Record Found";
+                    int i = 1;
+                    decimal sum = 0;
                     foreach (DataRow r in ds.Tables[0].Rows)
                     {
                         DirectIncomeResponse obj = new DirectIncomeResponse();
+                        obj.SrNo = i;
                         obj.LoginId = r["LoginId"].ToString();
                         obj.DisplayName = r["DisplayName"].ToString();
                         obj.CurrentDate = r["CurrentDate"].ToString();
@@ -957,9 +1002,12 @@ namespace ArabicaAPI.Controllers
                         obj.IncomeType = r["IncomeType"].ToString();
                         obj.BusinessAmount = r["BusinessAmount"].ToString();
                         obj.CommissionPercentage = r["CommissionPercentage"].ToString();
+                        sum = sum + Convert.ToDecimal(r["Amount"]);
                         lst.Add(obj);
+                        i++;
                     }
                     obj1.lstDirectIncome = lst;
+                    obj1.Total = sum;
                 }
                 else
                 {
@@ -1196,5 +1244,38 @@ namespace ArabicaAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, obj);
         }
         #endregion
+        [HttpPost]
+        public HttpResponseMessage UpdateProfile(UpdateProfile obj)
+        {
+            UpdateProfileResponse model = new UpdateProfileResponse();
+            try
+            {
+                DataSet ds = obj.UpdateProfileUser();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        model.Status = "0";
+                        model.Message = "Profile Updated Successfully.";
+                    }
+                    else
+                    {
+                        model.Status = "1";
+                        model.Message = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                }
+                else
+                {
+                    model.Status = "1";
+                    model.Message = "Error occured";
+                }
+            }
+            catch (Exception ex)
+            {
+                model.Status = "1";
+                model.Message = ex.Message;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
     }
 }
