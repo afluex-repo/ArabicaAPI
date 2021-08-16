@@ -8,7 +8,7 @@ using System.Net;
 
 namespace ArabicaAPI.Models
 {
-    public class WebAPI 
+    public class WebAPI
     {
     }
     public class LoginModel
@@ -233,6 +233,52 @@ namespace ArabicaAPI.Models
         public string BlockCss { get; set; }
         public string PaytmId { get; set; }
     }
+    public class UpdateProfile
+    {
+        public string FK_MemId { get; set; }
+        public string Email { get; set; }
+        public string AccountNo { get; set; }
+        public string BankName { get; set; }
+        public string BankBranch { get; set; }
+        public string IFSCCode { get; set; }
+        public string BankHolderName { get; set; }
+        public string MobileNo { get; set; }
+        public string Address { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public string PinCode { get; set; }
+        public string FirstName { get; set; }
+        public string PanNo { get; set; }
+        public string UpdatedBy { get; set; }
+        public string GooglePay { get; set; }
+        public DataSet UpdateProfileUser()
+        {
+            SqlParameter[] para = {
+                new SqlParameter("@PK_UserID",FK_MemId),
+                new SqlParameter("@Email",Email),
+                new SqlParameter("@AccountNo",AccountNo),
+                new SqlParameter("@BankName",BankName),
+                new SqlParameter("@IFSCCode",IFSCCode),
+                new SqlParameter("@BankHolderName",BankHolderName),
+                new SqlParameter("@Mobile1",MobileNo),
+                new SqlParameter("@Address",Address),
+                new SqlParameter("@State",State),
+                new SqlParameter("@City",City),
+                new SqlParameter("@PinCode",PinCode),
+                new SqlParameter("@FirstName",FirstName),
+                new SqlParameter("@PanNo",PanNo),
+                new SqlParameter("@UpdatedBy",UpdatedBy),
+                new SqlParameter("@GooglePay",GooglePay),
+            };
+            DataSet ds = DBHelper.ExecuteQuery("webMembersPIBIUpdateForMobile", para);
+            return ds;
+        }
+    }
+    public class UpdateProfileResponse
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+    }
     public class ChangePassword
     {
         public string NewPassword { get; set; }
@@ -355,9 +401,11 @@ namespace ArabicaAPI.Models
         public string Status { get; set; }
         public string Message { get; set; }
         public List<BinaryLevelIncomeResponse> lst { get; set; }
+        public decimal Total { get; set; }
     }
     public class BinaryLevelIncomeResponse
     {
+        public int SrNo { get; set; }
         public string Fk_MemId { get; set; }
         public string LoginID { get; set; }
         public string DisplayName { get; set; }
@@ -388,9 +436,11 @@ namespace ArabicaAPI.Models
         public string Status { get; set; }
         public string Message { get; set; }
         public List<LoanIncomeResponse> lst { get; set; }
+        public decimal Total { get; set; }
     }
     public class LoanIncomeResponse
     {
+        public int SrNo { get; set; }
         public string Fk_MemId { get; set; }
         public string LoginID { get; set; }
         public string DisplayName { get; set; }
@@ -515,6 +565,7 @@ namespace ArabicaAPI.Models
     }
     public class Wallet
     {
+        public int SrNo { get; set; }
         public string Id { get; set; }
         public string FK_MemId { get; set; }
         public string Status { get; set; }
@@ -546,9 +597,12 @@ namespace ArabicaAPI.Models
         public string Status { get; set; }
         public string Message { get; set; }
         public List<ReferalTransactionsResponse> lstReferalTransactions { get; set; }
+        public decimal TotalCrAmount { get; set; }
+        public decimal TotalDrAmount { get; set; }
     }
     public class ReferalTransactionsResponse
     {
+        public int SrNo { get; set; }
         public string id { get; set; }
         public string fk_memid { get; set; }
         public string Status { get; set; }
@@ -580,9 +634,12 @@ namespace ArabicaAPI.Models
         public string Status { get; set; }
         public string Message { get; set; }
         public List<BTranzactionDetailsResponse> lstBTranzactionDetails { get; set; }
+        public decimal TotalCrAmount { get; set; }
+        public decimal TotalDrAmount { get; set; }
     }
     public class BTranzactionDetailsResponse
     {
+        public int SrNo { get; set; }
         public string id { get; set; }
         public string fk_memid { get; set; }
         public string Status { get; set; }
@@ -615,9 +672,12 @@ namespace ArabicaAPI.Models
         public string Status { get; set; }
         public string Message { get; set; }
         public List<DTranzactionDetailsResponse> lstDTranzactionDetails { get; set; }
+        public decimal TotalCrAmount { get; set; }
+        public decimal TotalDrAmount { get; set; }
     }
     public class DTranzactionDetailsResponse
     {
+        public int SrNo { get; set; }
         public string id { get; set; }
         public string fk_memid { get; set; }
         public string Status { get; set; }
@@ -650,9 +710,11 @@ namespace ArabicaAPI.Models
         public string Status { get; set; }
         public string Message { get; set; }
         public List<DirectIncomeResponse> lstDirectIncome { get; set; }
+        public decimal Total { get; set; }
     }
     public class DirectIncomeResponse
     {
+        public int SrNo { get; set; }
         public string LoginId { get; set; }
         public string DisplayName { get; set; }
         public string CurrentDate { get; set; }
