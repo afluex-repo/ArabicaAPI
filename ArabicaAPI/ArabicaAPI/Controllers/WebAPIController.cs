@@ -676,6 +676,7 @@ namespace ArabicaAPI.Controllers
 
             try
             {
+                int i = 1;
                 List<Team> lst = new List<Team>();
                 DataSet ds = obj.GetMemberDownline();
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -685,12 +686,14 @@ namespace ArabicaAPI.Controllers
                     foreach (DataRow r in ds.Tables[0].Rows)
                     {
                         Team obj1 = new Team();
+                        obj1.SrNo = i;
                         obj1.FK_MemId = r["FK_MemId"].ToString();
                         obj1.DisplayName = r["DisplayName"].ToString();
                         obj1.LoginId = r["LoginId"].ToString();
                         obj1.JoiningDate = r["JoiningDate"].ToString();
                         obj1.Package = r["CalculationAmt"].ToString();
                         lst.Add(obj1);
+                        i++;
                     }
                     model.lst = lst;
                 }

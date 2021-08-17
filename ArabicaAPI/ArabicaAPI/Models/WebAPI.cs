@@ -504,6 +504,7 @@ namespace ArabicaAPI.Models
     }
     public class Team
     {
+        public int SrNo { get; set; }
         public string FK_MemId { get; set; }
         public string DisplayName { get; set; }
         public string LoginId { get; set; }
